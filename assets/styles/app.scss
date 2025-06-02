@@ -1,0 +1,92 @@
+// assets/styles/app.scss
+@import "~bootstrap/scss/bootstrap";
+
+// Your custom styles
+body {
+  padding-top: 56px; /* Adjust if using a fixed navbar */
+  background-color: #f8f9fa; // A light background, no wallpaper
+}
+
+.table-toolbar {
+  margin-bottom: 1rem;
+}
+
+.status-active {
+  color: green;
+  font-weight: bold;
+}
+
+.status-blocked {
+  color: red;
+  font-weight: bold;
+}
+
+/* Ensure no wallpaper under the table */
+.container, .table-responsive, table {
+    background-color: transparent !important; /* or #fff if you prefer a white bg for content area */
+}
+
+/* Login page specific styles */
+.login-page-body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Fallback color */
+    padding-top: 0 !important; /* Override body padding for login */
+}
+.login-container-wrapper {
+    display: flex;
+    width: 100%;
+}
+.login-form-section {
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #fff;
+}
+.login-image-section {
+    flex: 0 0 50%;
+    background-image: url('../images/login_background.webp'); /* Will be in public/images/ */
+    background-size: cover;
+    background-position: center;
+}
+.app-logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0d6efd;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    width: 100%;
+    max-width: 400px;
+}
+.form-signin, .form-register {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin: auto;
+}
+.extra-links {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+}
+.extra-links-register {
+    margin-top: 1.5rem;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+@media (max-width: 768px) {
+    .login-image-section, .register-image-section {
+        display: none;
+    }
+    .login-form-section, .register-form-section {
+        flex: 0 0 100%;
+    }
+}

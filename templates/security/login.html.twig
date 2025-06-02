@@ -1,0 +1,45 @@
+{# templates/security/login.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}Sign In{% endblock %}
+{% block body_class %}login-page-body{% endblock %} {# To use specific body style #}
+
+{% block body %}
+<div class="login-container-wrapper">
+    <div class="login-form-section">
+        <div class="app-logo">THE APP</div>
+        <form method="post" class="form-signin">
+            <h2 class="h5 mb-1 fw-normal">Start your journey</h2>
+            <h1 class="h3 mb-3 fw-bold">Sign In to The App</h1>
+
+            {% if error %}
+                <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <div class="form-floating mb-2">
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus placeholder="test@example.com">
+                <label for="inputEmail">E-mail</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Password">
+                <label for="inputPassword">Password</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>
+
+            <div class="extra-links mt-3">
+                <p class="mb-0">Don't have an account? <a href="{{ path('app_register') }}">Sign up</a></p>
+                <p class="mb-0"><a href="#">Forgot password?</a></p> {# Placeholder #}
+            </div>
+        </form>
+    </div>
+    <div class="login-image-section">
+        {# Background image set via CSS in assets/styles/app.scss #}
+    </div>
+</div>
+{% endblock %}

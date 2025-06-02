@@ -1,10 +1,14 @@
-import './bootstrap.js';
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
-import './styles/app.css';
+// assets/app.js
+import './styles/app.scss';
+import 'bootstrap'; // Import Bootstrap's JavaScript
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+// Initialize Bootstrap tooltips (or other components as needed)
+import { Tooltip } from 'bootstrap';
+document.addEventListener('DOMContentLoaded', function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new Tooltip(tooltipTriggerEl)
+    })
+});
+
+console.log('Webpack Encore with Bootstrap is working!');

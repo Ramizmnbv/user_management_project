@@ -1,0 +1,37 @@
+{# templates/security/register.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}Register{% endblock %}
+{% block body_class %}login-page-body{% endblock %} {# To use specific body style #}
+
+{% block body %}
+<div class="register-container-wrapper">
+    <div class="register-form-section">
+        <div class="app-logo">THE APP</div>
+        <div class="form-register">
+            <h1 class="h3 mb-3 fw-bold text-center">Create Account</h1>
+            {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+                <div class="form-floating mb-3">
+                    {{ form_widget(registrationForm.name) }}
+                    {{ form_label(registrationForm.name) }}
+                    {{ form_errors(registrationForm.name) }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_widget(registrationForm.email) }}
+                    {{ form_label(registrationForm.email) }}
+                    {{ form_errors(registrationForm.email) }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_widget(registrationForm.plainPassword) }}
+                    {{ form_label(registrationForm.plainPassword) }}
+                    {{ form_errors(registrationForm.plainPassword) }}
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+            {{ form_end(registrationForm) }}
+            <div class="extra-links-register mt-3">
+                <p>Already have an account? <a href="{{ path('app_login') }}">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="login-image-section"></div> {# Re-using login image section style #}
+</div>
+{% endblock %}

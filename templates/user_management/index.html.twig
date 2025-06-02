@@ -1,0 +1,125 @@
+{# templates/user_management/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}User Management{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">User Management Panel</h1>
+
+    <form id="userActionsForm" method="post" action="{{ path('app_user_actions') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('user_actions') }}">
+        <div class="table-toolbar d-flex align-items-center p-2 bg-light border rounded mb-3">
+            <div class="btn-group me-2" role="group" aria-label="User actions">
+                <button type="submit" name="action" value="block" class="btn btn-warning" data-bs-toggle="tooltip" title="Block selected users">
+                    Block
+                </button>
+                <button type="submit" name="action" value="unblock" class="btn btn-success" data-bs-toggle="tooltip" title="Unblock selected users">
+                    <i class="bi bi-unlock-fill"></i>
+                </button>
+                <button type="submit" name="action" value="delete" class="btn btn-danger" data-bs-toggle="tooltip" title="Delete selected users" onclick="return confirm('Are you sure you want to delete the selected users? This action cannot be undone.');">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </div>
+            {# <div class="ms-auto">
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="tooltip" title="Filter users (not implemented)">Filter</button>
+            </div> #}
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" style="width: 3em; text-align: center;">
+                            <input class="form-check-input" type="checkbox" id="selectAllCheckbox" title="Select/Deselect All">
+                        </th>
+                        {% macro sortable_header(label, column_key, current_sort_by, current_sort_order, route_name = 'app_user_management') %}
+                            <th scope="col" style="white-space: nowrap;">
+                                <a href="{{ path(route_name, {'sort_by': column_key, 'sort_order': (current_sort_by == column_key and current_sort_order == 'ASC' ? 'DESC' : 'ASC') }) }}"
+                                   class="text-decoration-none text-white">
+                                    {{ label }}
+                                    {% if current_sort_by == column_key %}
+                                        <i class="bi {{ current_sort_order == 'ASC' ? 'bi-sort-alpha-down' : 'bi-sort-alpha-up' }}"></i>
+                                    {% endif %}
+                                </a>
+                            </th>
+                        {% endmacro %}
+                        {{ _self.sortable_header('Name', 'name', sort_by, sort_order) }}
+                        {{ _self.sortable_header('Email', 'email', sort_by, sort_order) }}
+                        {{ _self.sortable_header('Last Seen', 'lastLoginTime', sort_by, sort_order) }}
+                        {{ _self.sortable_header('Status', 'status', sort_by, sort_order) }}
+                        {{ _self.sortable_header('Registered', 'registrationTime', sort_by, sort_order) }}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr class="{{ user.id == current_user_id ? 'table-primary' : '' }} {% if user.isBlocked() %}table-danger opacity-75{% endif %}">
+                        <td style="text-align: center;">
+                            <input class="form-check-input user-checkbox" type="checkbox" name="selected_users[]" value="{{ user.id }}" aria-label="Select user {{ user.name }}">
+                        </td>
+                        <td>
+                            {{ user.name }}
+                            {% if user.id == current_user_id %}<span class="badge bg-info text-dark ms-1">You</span>{% endif %}
+                            {# Optional: <br><small class="text-muted">Role from Screenshot</small> #}
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td data-bs-toggle="tooltip" title="{{ user.lastLoginTime ? user.lastLoginTime|date('Y-m-d H:i:s T', 'UTC') : 'Never logged in' }}">
+                            {% if user.lastLoginTime %}
+                                {{ user.lastLoginTime|date('M d, Y H:i') }}
+                                {# Or relative time: {{ user.lastLoginTime|time_diff }} requires twig/intl-extra #}
+                            {% else %}
+                                <span class="text-muted">Never</span>
+                            {% endif %}
+                            {# Sparkline placeholder, actual implementation requires a JS library
+                            <span class="float-end text-muted small">[|||]</span>
+                            #}
+                        </td>
+                        <td class="{{ user.status == 'active' ? 'status-active' : 'status-blocked' }}">
+                            {{ user.status|capitalize }}
+                        </td>
+                        <td data-bs-toggle="tooltip" title="{{ user.registrationTime|date('Y-m-d H:i:s T', 'UTC') }}">
+                             {{ user.registrationTime|date('M d, Y') }}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">No users found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select All checkbox functionality
+            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            const userCheckboxes = document.querySelectorAll('.user-checkbox');
+
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', function () {
+                    userCheckboxes.forEach(checkbox => {
+                        checkbox.checked = this.checked;
+                    });
+                });
+            }
+
+            userCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    if (!this.checked) {
+                        selectAllCheckbox.checked = false;
+                    } else {
+                        let allChecked = true;
+                        userCheckboxes.forEach(cb => { if (!cb.checked) allChecked = false; });
+                        selectAllCheckbox.checked = allChecked;
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
