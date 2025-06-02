@@ -38,9 +38,6 @@ Encore
      */
     .cleanupOutputBeforeBuild()
 
-    // Displays build status system notifications to the user
-    .enableBuildNotifications()
-
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
@@ -72,5 +69,9 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
 ;
+
+if (!Encore.isProduction()) {
+    Encore.enableBuildNotifications();
+}
 
 module.exports = Encore.getWebpackConfig();
