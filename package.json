@@ -18,5 +18,8 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress",
         "start": "php -S 0.0.0.0:8080 -t public"
+    },
+    "dependencies": {
+        "bootstrap": "^5.3.6"
     }
 }
