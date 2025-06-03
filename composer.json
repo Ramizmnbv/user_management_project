@@ -79,9 +79,9 @@
     },
     "scripts": {
     "auto-scripts": {
-        "cache:clear": "@empty",
-        "assets:install %PUBLIC_DIR%": "@empty",
-        "importmap:install": "@empty"
+        "cache:clear": "php -r \"echo 'Skipping cache:clear' . PHP_EOL;\"",
+        "assets:install %PUBLIC_DIR%": "php -r \"echo 'Skipping assets:install' . PHP_EOL;\"",
+        "importmap:install": "php -r \"echo 'Skipping importmap:install' . PHP_EOL;\""
     },
     "post-install-cmd": [
         "@auto-scripts"
