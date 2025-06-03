@@ -1,9 +1,10 @@
 #!/bin/sh
 
+echo "Starting server on PORT: $PORT"
+
 if [ -z "$PORT" ]; then
-  echo "Railway PORT env variable not set. Exiting."
-  exit 1
+  echo "PORT is not set. Defaulting to 8080"
+  PORT=8080
 fi
 
-echo "Starting server on PORT: $PORT"
-php -S 0.0.0.0:$PORT -t public
+exec php -S 0.0.0.0:$PORT -t public
