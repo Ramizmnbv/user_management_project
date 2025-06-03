@@ -79,9 +79,9 @@
     },
     "scripts": {
     "auto-scripts": {
-        "cache:clear": "@echo Skipping cache:clear during build",
-        "assets:install %PUBLIC_DIR%": "@echo Skipping assets:install during build",
-        "importmap:install": "@echo Skipping importmap:install during build"
+        "cache:clear": "@empty",
+        "assets:install %PUBLIC_DIR%": "@empty",
+        "importmap:install": "@empty"
     },
     "post-install-cmd": [
         "@auto-scripts"
