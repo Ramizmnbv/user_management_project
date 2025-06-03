@@ -20,7 +20,7 @@
         "symfony/doctrine-messenger": "7.3.*",
         "symfony/dotenv": "7.3.*",
         "symfony/expression-language": "7.3.*",
-        "symfony/flex": "^2",
+        "symfony/flex": "^2.7",
         "symfony/form": "7.3.*",
         "symfony/framework-bundle": "7.3.*",
         "symfony/http-client": "7.3.*",
@@ -78,17 +78,8 @@
         "symfony/polyfill-php82": "*"
     },
     "scripts": {
-    "auto-scripts": {
-        "cache:clear": "php -r \"echo 'Skipping cache:clear' . PHP_EOL;\"",
-        "assets:install %PUBLIC_DIR%": "php -r \"echo 'Skipping assets:install' . PHP_EOL;\"",
-        "importmap:install": "php -r \"echo 'Skipping importmap:install' . PHP_EOL;\""
-    },
-    "post-install-cmd": [
-        "@auto-scripts"
-    ],
-    "post-update-cmd": [
-        "@auto-scripts"
-    ]
+    "post-install-cmd": [],
+    "post-update-cmd": []
     },
     "conflict": {
         "symfony/symfony": "*"
